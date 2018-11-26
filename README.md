@@ -28,3 +28,7 @@ You'll need to follow theses parts :
 When that was done, you have to edit the script `prg_aws.py` with your own informations.
 
 Finally you can run the script by using : `python3 prg_aws.py`
+
+## Informations
+
+This script will create Amazon EC2 instance(s). Be carrefull, it can cost you money !
