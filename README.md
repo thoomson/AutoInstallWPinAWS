@@ -27,4 +27,4 @@ You'll need to follow theses parts :
 
 When that was done, you have to edit the script `prg_aws.py` with your own informations.
 
-Finally you wan run the script by using : `python3 prg_aws.py`
+Finally you can run the script by using : `python3 prg_aws.py`
