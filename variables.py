@@ -1,12 +1,11 @@
 """
 
 Variables used in prg_aws.py and functions.py.
-Edit them with your own variables.
+Edit them with your own informations.
 
 """
 
 # Wordpress
-# Also edit them in Ressources/bdd.sql
 WP_DB_HOST = 'localhost'
 WP_DB_NAME = 'wp_database'
 WP_DB_USER = 'wp_user'

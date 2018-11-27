@@ -74,7 +74,19 @@ def install_mysql(ssh, sftp):
 	in_, out_, err_ = ssh.exec_command("sudo apt-get install mysql-server -y && sudo apt-get install php7.0-mysql -y")
 	out_.channel.recv_exit_status()
 
-	sftp.put('Ressources/bdd.sql', '/home/admin/bdd.sql')
+	os.system("touch Gen_Files/bdd.sql")
+
+	sql_non_conf = open('Ressources/bdd.txt', 'r')
+	sql_conf = open('Gen_Files/bdd.sql', 'w')
+
+	line = 'not_empty'
+
+	while line:
+		line = sql_non_conf.readline()
+		sql_conf.write(line.format(db_name=WP_DB_NAME,db_user=WP_DB_USER,db_mdp=WP_DB_PASS,db_host=WP_DB_HOST))
+
+	sql_conf.close()
+	sftp.put('Gen_Files/bdd.sql', '/home/admin/bdd.sql')
 	time.sleep(1)
 
 	print("Conf MySQL OK.")
