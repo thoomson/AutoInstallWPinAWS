@@ -1,3 +1,10 @@
+"""
+
+Install and configure Wordpress on an Amazon AWS EC2 instance.
+Used Apache2, PHP 7.0, MySQL and Let's encrypt (SSL is optionnal)
+
+"""
+
 #Libraries
 import os
 import time
@@ -30,18 +37,18 @@ if ssl != 'o':
 #Create the boto3 ressource
 ec2 = boto3.resource(
 	'ec2', 
-	aws_access_key_id=AWS_ACCESS_KEY,
-    aws_secret_access_key=AWS_SECRET_KEY,
-    region_name =AWS_REGION_NAME
+	aws_access_key_id = AWS_ACCESS_KEY,
+    aws_secret_access_key = AWS_SECRET_KEY,
+    region_name = AWS_REGION_NAME
     )
 
 # Create a new EC2 instance
 instances = ec2.create_instances(
-    ImageId=AWS_AMI_ID,
-    MinCount=1,
-    MaxCount=1,
-    InstanceType=AWS_INSTANCE,
-    KeyName='MaPaire'
+    ImageId = AWS_AMI_ID,
+    MinCount = 1,
+    MaxCount = 1,
+    InstanceType = AWS_INSTANCE,
+    KeyName = 'MaPaire'
  )
 
 instance = instances[0]
@@ -63,13 +70,13 @@ time.sleep(5)
 # SSH connection
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect(str(ip), username='admin', key_filename='/home/user/Bureau/OS/MaPaire.pem')
+ssh.connect(str(ip), username='admin', key_filename=AWS_KEY_FILENAME)
 sftp = ssh.open_sftp()
 
 # APACHE
 install_apache2(ssh, sftp, url)
 
-#SSL
+# SSL
 if ssl == 'o':
 	install_ssl(ssh, sftp, url, ip)
 
@@ -86,6 +93,6 @@ install_wp(ssh, sftp, url)
 ssh.close()
 
 print('IP of your machine : ' + ip)# Display the public IP of the AWS instance
-print('Please note that this is the password for the wordpress database: ' + WP_DB_PASS)# Display the BDD password. Please note it.
+print('The installation is finish !')
 
 # End of the program

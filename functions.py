@@ -1,3 +1,9 @@
+"""
+
+Functions used in prg_was.py
+
+"""
+
 import os
 import time
 try:
@@ -8,8 +14,9 @@ except ModuleNotFoundError:
 
 from variables import *
 
-# Functions
 def install_apache2(ssh, sftp, url):
+	""" Install and configure apache2. """
+
 	in_, out_, err_ = ssh.exec_command("sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get install apache2 -y")
 	out_.channel.recv_exit_status()
 
@@ -45,6 +52,8 @@ def install_apache2(ssh, sftp, url):
 	print('Conf Apache OK.')
 
 def install_php(ssh):
+	""" Install and configure PHP. """
+
 	in_, out_, err_ = ssh.exec_command("sudo apt-get install php-fpm -y")
 	out_.channel.recv_exit_status()
 	
@@ -60,6 +69,8 @@ def install_php(ssh):
 	print('Conf PHP OK.')
 
 def install_mysql(ssh, sftp):
+	""" Install and configure MySQL. """
+
 	in_, out_, err_ = ssh.exec_command("sudo apt-get install mysql-server -y && sudo apt-get install php7.0-mysql -y")
 	out_.channel.recv_exit_status()
 
@@ -69,6 +80,8 @@ def install_mysql(ssh, sftp):
 	print("Conf MySQL OK.")
 
 def install_wp(ssh, sftp, url):
+	""" Download and install WORDPRESS. """
+
 	in_, out_, err_ = ssh.exec_command("sudo wget https://wordpress.org/latest.tar.gz -P /var/www/html/{}".format(url))
 	out_.channel.recv_exit_status()
 	in_, out_, err_ = ssh.exec_command("sudo tar zxvf /var/www/html/{}/latest.tar.gz -C /var/www/html/{}/".format(url, url))
@@ -101,6 +114,8 @@ def install_wp(ssh, sftp, url):
 	print("Conf WP OK.")
 
 def install_ssl(ssh, sftp, url, ip):
+	""" Install a ssl certificate powered by let's encrypt. """
+
 	print('Please add this IP : {} to your A record for the domain {}'.format(ip, url))
 
 	caract = input('If you can\'t do that, please answer \'c\' otherwise answer anything : ') 
