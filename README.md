@@ -16,7 +16,7 @@ Also you need to install pip3.
 ## Run the script
 First, you need to create an Amazon AWS account.
 
-Then, you have to create a key pair. Keep it name in mind. You'll need it in to run the program.
+Then, you have to create a key pair. Keep it name in mind. You'll need it in to run the program. (How to create a key pair on EC2 : https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
 
 After that, follow this tutorial : https://blog.ipswitch.com/how-to-create-an-ec2-instance-with-python
 
