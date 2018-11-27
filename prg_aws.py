@@ -95,4 +95,14 @@ ssh.close()
 print('IP of your machine : ' + ip)# Display the public IP of the AWS instance
 print('The installation is finish !')
 
+#Send SMS
+sms = boto3.client(
+	"sns",
+	aws_access_key_id = AWS_SNS_ACCESS_KEY,
+	aws_secret_access_key = AWS_SNS_SECRET_KEY,
+	region_name = AWS_SNS_REGION_NAME
+	)
+
+sms.publish(PhoneNumber=YOUR_PHONE_NUMBER, Message="Your Wordpress site on EC2 is installed ! Go to it on : {}".format(ip))
+
 # End of the program

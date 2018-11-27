@@ -19,3 +19,9 @@ AWS_ACCESS_KEY = 'YOUR_ACCESS_KEY'
 AWS_SECRET_KEY = 'YOUR_SECRET_KEY'
 AWS_REGION_NAME = 'us-east-2'
 AWS_KEY_FILENAME = '/directory/to/your/key/MaKey.pem'
+
+#SMS
+AWS_SNS_ACCESS_KEY = AWS_ACCESS_KEY
+AWS_SNS_SECRET_KEY = AWS_SECRET_KEY
+YOUR_PHONE_NUMBER = '+00XXXXXXXXX'
+AWS_SNS_REGION_NAME = 'us-east-1' #Supported regions : https://docs.aws.amazon.com/en_us/sns/latest/dg/sms_supported-countries.html
