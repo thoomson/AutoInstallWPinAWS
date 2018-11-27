@@ -1,6 +1,6 @@
 # AutoInstallWPinAWS
 Python script to automatically install Wordpress in an AWS EC2 instance
-This script has only be tested on Debian ! Be carrefull when use it on others systems.
+This script has only be tested on **Debian** ! Be carrefull when use it on others systems.
 
 ## Prepare your setup
 
@@ -31,7 +31,7 @@ To do that :
 
 ![ipswitch.com](https://blog.ipswitch.com/hs-fs/hubfs/prateek-add-user-aws-iam-2.png?t=1543273056029&width=831&name=prateek-add-user-aws-iam-2.png)
 
-5. to set the permissions, choose 'Attach Existing Policies Directly' and in the Policy Filter type 'AmazonEC2FullAccess', you can choose any permission level, but in this example I'll click on the checkbox next to 'AmazonEC2FullAccess' and then click the 'next' button. 
+5. To set the permissions, choose 'Attach Existing Policies Directly' and in the Policy Filter type 'AmazonEC2FullAccess', you can choose any permission level, but in this example I'll click on the checkbox next to 'AmazonEC2FullAccess'. Then repeat this step with 'AmazonSNSFullAccess' and then click the 'next' button. 
 
 ![ipswitch.com](https://blog.ipswitch.com/hs-fs/hubfs/prateek-add-user-aws-iam-3.png?t=1543273056029&width=972&name=prateek-add-user-aws-iam-3.png)
 
