@@ -48,7 +48,7 @@ instances = ec2.create_instances(
     MinCount = 1,
     MaxCount = 1,
     InstanceType = AWS_INSTANCE,
-    KeyName = 'MaPaire'
+    KeyName = AWS_KEY_NAME
  )
 
 instance = instances[0]
