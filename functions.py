@@ -6,11 +6,8 @@ Functions used in prg_was.py
 
 import os
 import time
-try:
-	import requests
-except ModuleNotFoundError:
-	os.system('pip3 install request')
-	import requests
+
+import requests
 
 from variables import *
 
@@ -20,7 +17,10 @@ def install_apache2(ssh, sftp, url):
 	in_, out_, err_ = ssh.exec_command("sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get install apache2 -y")
 	out_.channel.recv_exit_status()
 
-	os.system("touch Gen_Files/01-{}.conf".format(url))
+	if os.name == 'nt':
+		os.system("echo. 2>Gen_Files/01-{}.conf".format(url))
+	else:
+		os.system("touch Gen_Files/01-{}.conf".format(url))
 
 	vhost_non_conf = open('Ressources/vhost.conf','r')
 	vhost_conf = open('Gen_Files/01-{}.conf'.format(url), 'w')
@@ -74,7 +74,10 @@ def install_mysql(ssh, sftp):
 	in_, out_, err_ = ssh.exec_command("sudo apt-get install mysql-server -y && sudo apt-get install php7.0-mysql -y")
 	out_.channel.recv_exit_status()
 
-	os.system("touch Gen_Files/bdd.sql")
+	if os.name == 'nt':
+		os.system("echo. 2>Gen_Files/bdd.sql")
+	else:
+		os.system("touch Gen_Files/bdd.sql")
 
 	sql_non_conf = open('Ressources/bdd.txt', 'r')
 	sql_conf = open('Gen_Files/bdd.sql', 'w')
@@ -102,7 +105,10 @@ def install_wp(ssh, sftp, url):
 	secret_key = 'https://api.wordpress.org/secret-key/1.1/salt/'
 	r = requests.post(secret_key)
 
-	os.system("touch Gen_Files/wp-config.php")
+	if os.name == 'nt':
+		os.system("echo. 2>Gen_Files/wp-config.php")
+	else:
+		os.system("touch Gen_Files/wp-config.php")
 
 	wp_non_conf = open('Ressources/wp-config.txt', 'r')
 	wp_conf = open('Gen_Files/wp-config.php', 'w')

@@ -6,25 +6,13 @@ Used Apache2, PHP 7.0, MySQL and Let's encrypt (SSL is optionnal)
 """
 
 #Libraries
-import os
 import time
+
+import boto3
+import paramiko
+
 from functions import *
 from variables import *
-
-try:
-	import boto3
-except ModuleNotFoundError:
-	os.system('pip3 install boto3')
-	import boto3
-
-try:
-	import paramiko
-except ModuleNotFoundError:
-	os.system('pip3 install paramiko')
-	import paramiko
-
-#Pre-start
-os.system("rm -r Gen_Files/*")
 
 #Beginning of the program
 url = input('Enter the URL as \'example.com\' (without \'www\' or \'http(s)\'): ')

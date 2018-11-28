@@ -4,11 +4,13 @@ This script has only be tested on **Debian** ! Be carrefull when use it on other
 
 ## Prepare your setup
 
-To use this script you need to install Python3 and pip3. Also you need a Linux machine to run it.
+To use this script you need to install Python3 and pip3.
 * On debian/ubuntu : `apt-get install python3 pip3`
 * On centos : `yum install python3 pip3`
 
-I currently develop a new version with Windows support.
+You can also use it on Windows.
+
+After install Python3 and pip3, please install theses librairies : `boto3`, `paramiko` and `requests`.
 
 ## AWS Preparation
 
@@ -52,3 +54,11 @@ Finally you can run the script by using : `python3 prg_aws.py`
 ## Informations
 
 This script will create Amazon EC2 instance(s). Be carrefull, it can cost you money !
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
