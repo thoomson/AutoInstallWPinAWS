@@ -11,7 +11,7 @@ WP_DB_NAME = 'wp_database'
 WP_DB_USER = 'wp_user'
 WP_DB_PASS = 'wikipass' 
 
-#AWS
+# AWS
 AWS_KEY_NAME = 'MaPaire'
 AWS_INSTANCE = 't3.nano'
 AWS_AMI_ID = 'ami-05829248ffee66250' #Note: The program was developped for Debian 9
@@ -19,9 +19,8 @@ AWS_ACCESS_KEY = 'YOUR_ACCESS_KEY'
 AWS_SECRET_KEY = 'YOUR_SECRET_KEY'
 AWS_REGION_NAME = 'us-east-2'
 AWS_KEY_FILENAME = '/directory/to/your/key/MaKey.pem'
-AWS_KEY_NAME = 'MaKey.pem'
 
-#SMS
+# SMS
 AWS_SNS_ACCESS_KEY = AWS_ACCESS_KEY
 AWS_SNS_SECRET_KEY = AWS_SECRET_KEY
 YOUR_PHONE_NUMBER = '+00XXXXXXXXX'
