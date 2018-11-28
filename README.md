@@ -1,16 +1,19 @@
 # AutoInstallWPinAWS
 Python script to automatically install Wordpress in an AWS EC2 instance
-This script has only be tested on **Debian** ! Be carrefull when use it on others systems.
+This script has only be tested on **Debian** and **Windows 10** ! Be carrefull when use it on others systems.
 
 ## Prepare your setup
 
 To use this script you need to install Python3 and pip3.
 * On debian/ubuntu : `apt-get install python3 pip3`
 * On centos : `yum install python3 pip3`
+* On Windows : install the last 3.X version on : https://www.python.org/downloads/
 
-You can also use it on Windows.
+In the installation, be carrefull to select the option `Add Python to environnment variables`
 
-After install Python3 and pip3, please install theses librairies : `boto3`, `paramiko` and `requests`.
+![Python_Install](https://i.imgur.com/TMMV3nE.png)
+
+After install Python3 and pip3, please install theses librairies : `boto3`, `paramiko` and `requests`.(`pip3 install boto3 paramiko requests` on your command line)
 
 ## AWS Preparation
 
@@ -49,7 +52,7 @@ To do that :
 
 When that was done, you have to edit the script `variables.py` with your own informations.
 
-Finally you can run the script by using : `python3 prg_aws.py`
+Finally you can run the script by using : `python3 prg_aws.py` or `python prg_aws.py` in Windows.
 
 ## Informations
 
