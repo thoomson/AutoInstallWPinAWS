@@ -1,6 +1,6 @@
 """
 
-Variables used in prg_aws.py and functions.py.
+Variables used in program.py and functions.py.
 Edit them with your own informations.
 
 """

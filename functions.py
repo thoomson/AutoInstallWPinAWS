@@ -1,6 +1,6 @@
 """
 
-Functions used in prg_was.py
+Functions used in program.py
 
 """
 

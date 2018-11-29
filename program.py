@@ -19,9 +19,6 @@ url = input('Enter the URL as \'example.com\' (without \'www\' or \'http(s)\'): 
 
 ssl = input('Do you want an HTTPS website ? (o/n): ').lower() # HTTPS is powered by LetsEncrypt
 
-if ssl != 'o':
-	ssl = 'n'
-
 #Create the boto3 ressource
 ec2 = boto3.resource(
 	'ec2', 
