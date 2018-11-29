@@ -25,7 +25,7 @@ ec2 = boto3.resource(
 	aws_access_key_id = AWS_ACCESS_KEY,
     aws_secret_access_key = AWS_SECRET_KEY,
     region_name = AWS_REGION_NAME
-    )
+ )
 
 # Create a new EC2 instance
 instances = ec2.create_instances(
@@ -50,7 +50,7 @@ instance.load()
 ip = instance.public_ip_address
 
 # Wait a bit for the instance's initialisation
-time.sleep(5)
+time.sleep(4)
 
 # SSH connection
 ssh = paramiko.SSHClient()
@@ -58,29 +58,29 @@ ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 ssh.connect(str(ip), username='admin', key_filename=AWS_KEY_FILENAME)
 sftp = ssh.open_sftp()
 
-# APACHE
+# Install and configure Apache2
 install_apache2(ssh, sftp, url)
 
-# SSL
+# Install SSL certificate if desired
 if ssl == 'o':
 	install_ssl(ssh, sftp, url, ip)
 
-# PHP
+# Install and configure PHP
 install_php(ssh)
 
-# MYSQL
+# Install and configure MySQL
 install_mysql(ssh, sftp)
 
-# WORDPRESS
+# Pre-install Wordpress
 install_wp(ssh, sftp, url)
 
 # End of the SSH connection
 ssh.close()
 
 print('IP of your machine : ' + ip)# Display the public IP of the AWS instance
-print('The installation is finish !')
+print('The installation is finished !')
 
-#Send SMS
+# Send SMS
 sms = boto3.client(
 	"sns",
 	aws_access_key_id = AWS_SNS_ACCESS_KEY,

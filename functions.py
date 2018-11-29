@@ -14,14 +14,17 @@ from variables import *
 def install_apache2(ssh, sftp, url):
 	""" Install and configure apache2. """
 
+	# Uptade the machine and install apache2
 	in_, out_, err_ = ssh.exec_command("sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get install apache2 -y")
 	out_.channel.recv_exit_status()
 
+	# Create the new apache configuration file
 	if os.name == 'nt':
 		os.system("echo. 2>Gen_Files/01-{}.conf".format(url))
 	else:
 		os.system("touch Gen_Files/01-{}.conf".format(url))
 
+	# Create the new file with the good url
 	vhost_non_conf = open('Ressources/vhost.conf','r')
 	vhost_conf = open('Gen_Files/01-{}.conf'.format(url), 'w')
 
@@ -33,6 +36,7 @@ def install_apache2(ssh, sftp, url):
 
 	vhost_conf.close()
 
+	# Send the configuration file on the EC2 instance
 	sftp.put('Gen_Files/01-{}.conf'.format(url), '/home/admin/01-{}.conf'.format(url))
 	time.sleep(1)
 
@@ -74,6 +78,7 @@ def install_mysql(ssh, sftp):
 	in_, out_, err_ = ssh.exec_command("sudo apt-get install mysql-server -y && sudo apt-get install php7.0-mysql -y")
 	out_.channel.recv_exit_status()
 
+	# Create the new database installer file
 	if os.name == 'nt':
 		os.system("echo. 2>Gen_Files/bdd.sql")
 	else:
@@ -89,6 +94,8 @@ def install_mysql(ssh, sftp):
 		sql_conf.write(line.format(db_name=WP_DB_NAME,db_user=WP_DB_USER,db_mdp=WP_DB_PASS,db_host=WP_DB_HOST))
 
 	sql_conf.close()
+
+	#Send the file on the EC2 instance
 	sftp.put('Gen_Files/bdd.sql', '/home/admin/bdd.sql')
 	time.sleep(1)
 
