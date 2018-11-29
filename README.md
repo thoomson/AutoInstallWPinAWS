@@ -13,7 +13,7 @@ In the installation, be carrefull to select the option `Add Python to environnme
 
 ![Python_Install](https://i.imgur.com/TMMV3nE.png)
 
-After install Python3 and pip3, please install theses librairies : `boto3`, `paramiko` and `requests`.(`pip3 install boto3 paramiko requests` on your command line)
+After install Python3 and pip3, please install theses librairies : `boto3`, `paramiko` and `requests`. (`pip3 install boto3 paramiko requests` on your command line)
 
 ## AWS Preparation
 
