@@ -52,7 +52,7 @@ To do that :
 
 When that was done, you have to edit the script `variables.py` with your own informations.
 
-Finally you can run the script by using : `python3 prg_aws.py` or `python prg_aws.py` in Windows.
+Finally you can run the script by using : `python3 program.py` or `python program.py` in Windows.
 
 ## Informations
 
