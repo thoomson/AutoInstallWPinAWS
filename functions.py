@@ -8,6 +8,7 @@ import os
 import time
 
 import requests
+import boto3
 
 from variables import *
 
@@ -127,6 +128,8 @@ def install_wp(ssh, sftp, url):
 		wp_conf.write(line.format(db_name=WP_DB_NAME,db_user=WP_DB_USER,db_mdp=WP_DB_PASS,key_secret=r.text))
 
 	wp_conf.close()
+
+	# Send the config file on the EC2 instance
 	sftp.put('Gen_Files/wp-config.php', '/home/admin/wp-config.php')
 	time.sleep(1)
 
@@ -165,6 +168,7 @@ def install_ssl(ssh, sftp, url, ip):
 
 		vhost_ssl_conf.close()	
 
+		# Send the config file on the EC2 instance
 		sftp.put('Gen_Files/01-{}.conf'.format(url), '/home/admin/01-{}.conf'.format(url))
 		time.sleep(1)
 
@@ -183,3 +187,50 @@ def install_ssl(ssh, sftp, url, ip):
 
 	else:
 		print("Conf SSL NOT OK.")
+
+def auto_renew_ssl(ssh, sftp, url):
+	""" Create crontab job to automatically renew SSL certificate """
+
+	# Install cron package
+	in_, out_, err_ = ssh.exec_command("sudo apt-get install cron -y")
+	out_.channel.recv_exit_status()
+
+	# Create the new apache configuration file
+	if os.name == 'nt':
+		os.system("echo. 2>Gen_Files/renew_ssl.sh")
+	else:
+		os.system("touch Gen_Files/renew_ssl.sh")
+
+	renew_ssl_non_conf = open('Ressources/renew_ssl.txt','r')
+	renew_ssl_conf = open('Gen_Files/renew_ssl.sh', 'w')
+
+	line = 'not_empty'
+
+	while line:
+		line = renew_ssl_non_conf.readline()
+		renew_ssl_conf.write(line.format(site=url))
+
+	renew_ssl_conf.close()	
+
+	# Send the config file on the EC2 instance
+	sftp.put('Gen_Files/renew_ssl.sh', '/home/admin/renew_ssl.sh')
+	time.sleep(1)
+
+	in_, out_, err_ = ssh.exec_command("sudo cp /home/admin/renew_ssl.sh /usr/sbin/renew_ssl.sh")
+	out_.channel.recv_exit_status()
+
+	in_, out_, err_ = ssh.exec_command("sudo sh -c \"echo \'0 0 1 * * root /usr/sbin/renew_ssl.sh\' >> /etc/crontab\"") 
+	out_.channel.recv_exit_status()
+
+def send_sms(message, number):
+	""" Send a specific message to a specific number with Amazon SNS"""
+
+	sms = boto3.client(
+		"sns",
+		aws_access_key_id = AWS_SNS_ACCESS_KEY,
+		aws_secret_access_key = AWS_SNS_SECRET_KEY,
+		region_name = AWS_SNS_REGION_NAME
+	)
+
+	# Send SMS
+	sms.publish(PhoneNumber=number, Message=message)

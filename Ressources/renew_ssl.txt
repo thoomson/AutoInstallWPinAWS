@@ -1,0 +1,1 @@
+sudo letsencrypt certonly --standalone --agree-tos --email admin@{site} -d {site} -d www.{site} --standalone-supported-challenges http-01 --renew-by-default
