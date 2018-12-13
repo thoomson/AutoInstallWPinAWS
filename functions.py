@@ -41,11 +41,11 @@ def install_apache2(ssh, sftp, url):
 	sftp.put('Gen_Files/01-{}.conf'.format(url), '/home/admin/01-{}.conf'.format(url))
 	time.sleep(1)
 
-	in_, out_, err_ = ssh.exec_command("sudo cp /home/admin/01-{}.conf /etc/apache2/sites-available/".format(url))
+	in_, out_, err_ = ssh.exec_command("sudo mv /home/admin/01-{}.conf /etc/apache2/sites-available/".format(url))
 	out_.channel.recv_exit_status()
 	in_, out_, err_ = ssh.exec_command("sudo mkdir /var/www/html/{}/".format(url))
 	out_.channel.recv_exit_status()
-	in_, out_, err_ = ssh.exec_command("sudo cp /var/www/html/index.html /var/www/html/{}".format(url))
+	in_, out_, err_ = ssh.exec_command("sudo mv /var/www/html/index.html /var/www/html/{}".format(url))
 	out_.channel.recv_exit_status()
 	in_, out_, err_ = ssh.exec_command("sudo a2dissite 000-default")
 	out_.channel.recv_exit_status()
@@ -133,10 +133,18 @@ def install_wp(ssh, sftp, url):
 	sftp.put('Gen_Files/wp-config.php', '/home/admin/wp-config.php')
 	time.sleep(1)
 
-	in_, out_, err_ = ssh.exec_command("sudo cp /home/admin/wp-config.php /var/www/html/{}/wordpress/wp-config.php".format(url))
+	in_, out_, err_ = ssh.exec_command("sudo mv /home/admin/wp-config.php /var/www/html/{}/wordpress/wp-config.php".format(url))
 	out_.channel.recv_exit_status()
 
 	in_, out_, err_ = ssh.exec_command("sudo mysql -u root < bdd.sql")
+	out_.channel.recv_exit_status()
+
+	# Delete the bdd.sql file because we don't need it anymore
+	in_, out_, err_ = ssh.exec_command("rm bdd.sql")
+	out_.channel.recv_exit_status()
+
+	# Autorize Wordpress to write on the WP directory
+	in_, out_, err_ = ssh.exec_command("sudo chown -R www-data:www-data /var/www/html/{}/wordpress/".format(url))
 	out_.channel.recv_exit_status()
 
 	print("Conf WP OK.")
@@ -172,7 +180,7 @@ def install_ssl(ssh, sftp, url, ip):
 		sftp.put('Gen_Files/01-{}.conf'.format(url), '/home/admin/01-{}.conf'.format(url))
 		time.sleep(1)
 
-		in_, out_, err_ = ssh.exec_command("sudo cp /home/admin/01-{}.conf /etc/apache2/sites-available/".format(url))
+		in_, out_, err_ = ssh.exec_command("sudo mv /home/admin/01-{}.conf /etc/apache2/sites-available/".format(url))
 		out_.channel.recv_exit_status()
 		in_, out_, err_ = ssh.exec_command("sudo systemctl start apache2")
 		out_.channel.recv_exit_status()
@@ -216,7 +224,7 @@ def auto_renew_ssl(ssh, sftp, url):
 	sftp.put('Gen_Files/renew_ssl.sh', '/home/admin/renew_ssl.sh')
 	time.sleep(1)
 
-	in_, out_, err_ = ssh.exec_command("sudo cp /home/admin/renew_ssl.sh /usr/sbin/renew_ssl.sh")
+	in_, out_, err_ = ssh.exec_command("sudo mv /home/admin/renew_ssl.sh /usr/sbin/renew_ssl.sh")
 	out_.channel.recv_exit_status()
 
 	in_, out_, err_ = ssh.exec_command("sudo sh -c \"echo \'0 0 1 * * root /usr/sbin/renew_ssl.sh\' >> /etc/crontab\"") 
